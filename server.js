@@ -11,9 +11,7 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/api',async(req,res)=>{
-    console.log("hi");
-
-    console.log(req._parsedUrl.query);
+    //console.log(req._parsedUrl.query);
     let data = await axios(`https://newsapi.org/v2/everything?${req._parsedUrl.query}&apiKey=73dccde54f984428a50909384654f006`)
     let info = data.data;
     //console.log(info);

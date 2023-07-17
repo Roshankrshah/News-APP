@@ -60,20 +60,24 @@
 
     <script>
         console.log("Hello");
-        /*let articlesPerPage, totalPages;
+        /*let articlesPerPage, totalPages;*/
         
         let query = window.location.search.split('?')[1].split('&')[0].split('=')[1];
-        let page = window.location.search.split('?')[1].split('&')[1].split('=')[1];
+        let page = parseInt(window.location.search.split('?')[1].split('&')[1].split('=')[1]);
 
-        console.log(query,page);*/
+        console.log(query,page);
+        //let page = 1;
 
-        const fetchNews = async (query) => {
-            let a = await fetch(`/api?q=${query}`);
+        const fetchNews = async (query,pageNo) => {
+            let a = await fetch(`/api?q=${query}&pageSize=20&page=${pageNo}`);
             //console.log(a);
             let r = await a.json();
-            console.log(r);
+            //console.log(r);
             let articles = r.articles;
             //totalPages = Math.ceil(r.totalResults/articlesPerPage);
+
+            prev.href = `/?q=${query}&page=${page-1}`;
+            next.href = `/?q=${query}&page=${page+1}`;
 
             let newsArticles = articles.map((item) => {
                 
@@ -91,7 +95,7 @@
             content.innerHTML = newsArticles;
         }
 
-        fetchNews("sports");
+        fetchNews(query,page);
 
 
     </script>
