@@ -47,9 +47,9 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item"><a id="prev" class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a id="one" class="page-link" href="#">1</a></li>
+                <li class="page-item"><a id="two" class="page-link" href="#">2</a></li>
+                <li class="page-item"><a id="three" class="page-link" href="#">3</a></li>
                 <li class="page-item"><a id="next" class="page-link" href="#">Next</a></li>
             </ul>
         </nav>
@@ -60,34 +60,38 @@
 
     <script>
         console.log("Hello");
-        /*let articlesPerPage, totalPages;*/
-        
+        //let articlesPerPage = 20, totalPages;
+
         let query = window.location.search.split('?')[1].split('&')[0].split('=')[1];
         let page = parseInt(window.location.search.split('?')[1].split('&')[1].split('=')[1]);
 
-        console.log(query,page);
+        console.log(query, page);
         //let page = 1;
 
-        const fetchNews = async (query,pageNo) => {
-            let a = await fetch(`/api?q=${query}&pageSize=20&page=${pageNo}`);
+        const fetchNews = async (query, pageNo) => {
+            let a = await fetch(`/api?q=${query}&pageSize=10&page=${pageNo}`);
             //console.log(a);
             let r = await a.json();
             //console.log(r);
             let articles = r.articles;
-            //totalPages = Math.ceil(r.totalResults/articlesPerPage);
 
-            prev.href = `/?q=${query}&page=${page-1}`;
-            next.href = `/?q=${query}&page=${page+1}`;
+            prev.href = `/?q=${query}&page=${page - 1 == 0 ? 10 : page - 1}`;
+
+            one.href = `/?q=${query}&page=${1}`;
+            two.href = `/?q=${query}&page=${2}`;
+            three.href = `/?q=${query}&page=${3}`;
+
+            next.href = `/?q=${query}&page=${page + 1 == 11 ? 1 : page + 1}`;
 
             let newsArticles = articles.map((item) => {
-                
+
                 return `
                 <div class="card m-2" style="width: 18rem;">
                     <img src="${item.urlToImage}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${item.title}</h5>
                         <p class="card-text">${item.description}</p>
-                        <a href="${item.url}" class="btn btn-primary">Read more..</a>
+                        <a target ='_blank' href="${item.url}" class="btn btn-primary">Read more..</a>
                     </div>
                 </div>`
             }).join("");
@@ -95,7 +99,7 @@
             content.innerHTML = newsArticles;
         }
 
-        fetchNews(query,page);
+        fetchNews(query, page);
 
 
     </script>
