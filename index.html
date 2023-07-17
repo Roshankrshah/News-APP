@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar  navbar-expand-lg bg-body-tertiary " data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">WebNews</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -24,7 +24,7 @@
                         <a class="nav-link active" aria-current="page" href="/?q=all&page=1">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/?q=all&page=1">Trending</a>
+                        <a class="nav-link"  aria-current="page" href="/?country=in&page=1">Trending</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/?q=india weather&page=1">Weather</a>
@@ -53,8 +53,9 @@
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
-                    <input class="form-control me-2" name="page" type="hidden" value="1" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <input class="form-control me-2" name="page" type="hidden" value="1" placeholder="Search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-danger" type="submit">Search</button>
                 </form>
             </div>
         </div>
@@ -64,7 +65,8 @@
         <!--Cards Start Here-->
         <div id="content" class="row">
             <div class="d-flex justify-content-center">
-                <img width="23" src="https://samherbert.net/svg-loaders/svg-loaders/oval.svg" style="filter: invert(1)" alt="Loading...">
+                <img width="23" src="https://samherbert.net/svg-loaders/svg-loaders/oval.svg" style="filter: invert(1)"
+                    alt="Loading...">
             </div>
         </div>
         <!--Cards End Here-->
@@ -85,17 +87,21 @@
         crossorigin="anonymous"></script>
 
     <script>
-        console.log("Hello");
-        //let articlesPerPage = 20, totalPages;
-
-        let query = window.location.search.split('?')[1].split('&')[0].split('=')[1];
+        
+        let query = window.location.search.split('?')[1].split('&')[0];
         let page = parseInt(window.location.search.split('?')[1].split('&')[1].split('=')[1]);
 
-        console.log(query, page);
-        //let page = 1;
+        //console.log(query, page);
 
         const fetchNews = async (query, pageNo) => {
-            let a = await fetch(`/api?q=${query}&pageSize=10&page=${pageNo}`);
+            let a;
+            if(query.includes('country')){
+                let country = query.split('=')[1];
+                a = await fetch(`/api/trend?country=${country}&pageSize=10&page=${pageNo}`);
+            }else{
+                let category = query.split('=')[1];
+                a = await fetch(`/api?q=${category}&pageSize=10&page=${pageNo}`);
+            }
             //console.log(a);
             let r = await a.json();
             //console.log(r);
@@ -124,9 +130,7 @@
 
             content.innerHTML = newsArticles;
         }
-
-        fetchNews(query, page);
-
+        window.onload = fetchNews(query, page);
 
     </script>
 </body>
