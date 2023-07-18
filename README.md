@@ -17,5 +17,5 @@ There are many navigation button like Home, Trending, Sports, Weather which take
 HTML, JavaScript, Nodejs, Expressjs, Bootstrap
 
 
-### Thanks to News API for providing awesome endpoints @ [https://developers.giphy.com/](https://newsapi.org/)
+### Thanks to News API for providing awesome endpoints @ (https://newsapi.org/)
 #### For using API Signup and generate your API KEY at free of cost.
