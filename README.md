@@ -13,5 +13,9 @@ There are many navigation button like Home, Trending, Sports, Weather which take
 ![image](https://github.com/Roshankrshah/News-APP/assets/91787844/a0e10136-d73b-45b7-8860-041caaa6392e)
 
 
+# TechStack Used
+HTML, JavaScript, Nodejs, Expressjs, Bootstrap
+
+
 ### Thanks to News API for providing awesome endpoints @ [https://developers.giphy.com/](https://newsapi.org/)
 #### For using API Signup and generate your API KEY at free of cost.
